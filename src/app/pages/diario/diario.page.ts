@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import {
-  IonHeader, IonToolbar, IonContent, IonTextarea,
+  IonContent, IonTextarea,
   IonSpinner, IonIcon, IonRefresher, IonRefresherContent,
   IonItemSliding, IonItem, IonItemOptions, IonItemOption,
   AlertController, ToastController,
@@ -61,7 +61,7 @@ export const EMOCAO_COR: Record<string, 'positiva' | 'negativa' | 'neutra'> = {
   standalone: true,
   imports: [
     FormsModule, DatePipe, TitleCasePipe,
-    IonHeader, IonToolbar, IonContent, IonTextarea,
+    IonContent, IonTextarea,
     IonSpinner, IonIcon, IonRefresher, IonRefresherContent,
     IonItemSliding, IonItem, IonItemOptions, IonItemOption,
     BottomNavComponent,

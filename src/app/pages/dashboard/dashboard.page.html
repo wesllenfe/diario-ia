@@ -1,15 +1,12 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <div class="toolbar-inner">
-      <div>
-        <p class="toolbar-label">Seus insights</p>
-        <h1 class="toolbar-title">Dashboard</h1>
-      </div>
-    </div>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true" class="dash-content">
+
+  <!-- Cabeçalho -->
+  <div class="page-header animate-in">
+    <div class="page-header-text">
+      <span class="header-eyebrow">Seus insights</span>
+      <h1 class="header-title">Dashboard</h1>
+    </div>
+  </div>
 
   <!-- ── Skeleton ── -->
   @if (carregando()) {

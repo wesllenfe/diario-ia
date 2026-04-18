@@ -22,21 +22,63 @@ body {
   background: var(--cor-background);
 }
 
-/* ── Toolbar refinada ── */
-ion-toolbar {
-  --border-width: 0 0 1px 0 !important;
-  --border-color: var(--cor-border) !important;
-  --padding-start: var(--sp-4);
-  --padding-end: var(--sp-4);
-  --min-height: 56px;
+/* ── Page header (substitui ion-toolbar) ── */
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: calc(var(--ion-safe-area-top, 0px) + 28px) var(--sp-4) var(--sp-3);
+}
 
-  ion-title {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: -0.01em;
-    color: var(--cor-ink);
+.page-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.header-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cor-primary);
+  line-height: 1;
+}
+
+.header-title {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--cor-ink);
+  margin: 0;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.header-action {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--cor-white);
+  border: 1.5px solid var(--cor-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-ink-muted);
+  cursor: pointer;
+  box-shadow: var(--shadow-xs);
+  flex-shrink: 0;
+  transition: all var(--ease-fast);
+
+  ion-icon { font-size: 1.05rem; }
+
+  &:hover {
+    background: var(--cor-primary-ghost);
+    color: var(--cor-primary);
+    border-color: var(--cor-primary);
   }
+  &:active { transform: scale(0.93); }
 }
 
 /* ── Input global ── */

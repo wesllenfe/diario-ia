@@ -3,28 +3,6 @@
   --padding-bottom: 80px;
 }
 
-/* ── Toolbar ── */
-.toolbar-inner {
-  padding: var(--sp-2) 0;
-}
-
-.toolbar-label {
-  font-size: 0.68rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--cor-primary);
-  margin: 0 0 2px;
-}
-
-.toolbar-title {
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: var(--cor-ink);
-  margin: 0;
-  letter-spacing: -0.02em;
-}
 
 /* ── Body ── */
 .dash-body {

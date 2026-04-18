@@ -1,22 +1,19 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <div class="toolbar-inner">
-      <div class="toolbar-date">
-        <span class="toolbar-day">{{ hoje | date:'EEEE' | titlecase }}</span>
-        <span class="toolbar-full-date">{{ hoje | date:"d 'de' MMMM" }}</span>
-      </div>
-      <button class="icon-btn" (click)="sair()" title="Sair">
-        <ion-icon name="log-out-outline" />
-      </button>
-    </div>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true" class="diario-content">
 
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content pullingIcon="chevron-down-outline" refreshingSpinner="crescent" />
   </ion-refresher>
+
+  <!-- Cabeçalho -->
+  <div class="page-header animate-in">
+    <div class="page-header-text">
+      <span class="header-eyebrow">{{ hoje | date:'EEEE' | titlecase }}</span>
+      <h1 class="header-title">{{ hoje | date:"d 'de' MMMM" }}</h1>
+    </div>
+    <button class="header-action" (click)="sair()" title="Sair">
+      <ion-icon name="log-out-outline" />
+    </button>
+  </div>
 
   <!-- Área de escrita -->
   <div class="write-section animate-in">

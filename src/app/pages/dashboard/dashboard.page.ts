@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import {
-  IonHeader, IonToolbar, IonContent, IonIcon, IonSpinner,
+  IonContent, IonIcon, IonSpinner,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -26,7 +26,7 @@ const PAD_X = 6;
   standalone: true,
   imports: [
     DecimalPipe,
-    IonHeader, IonToolbar, IonContent, IonIcon, IonSpinner,
+    IonContent, IonIcon, IonSpinner,
     BottomNavComponent,
   ],
 })

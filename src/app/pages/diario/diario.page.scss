@@ -3,58 +3,6 @@
   --padding-bottom: 80px;
 }
 
-/* ── Toolbar ── */
-.toolbar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: var(--sp-2) 0;
-}
-
-.toolbar-date {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-
-  .toolbar-day {
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: var(--cor-primary);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .toolbar-full-date {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--cor-ink);
-    letter-spacing: -0.01em;
-  }
-}
-
-.icon-btn {
-  width: 36px;
-  height: 36px;
-  background: transparent;
-  border: 1.5px solid var(--cor-border);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--cor-ink-muted);
-  transition: all var(--ease-fast);
-
-  ion-icon { font-size: 1.1rem; }
-
-  &:hover {
-    background: var(--cor-primary-ghost);
-    border-color: var(--cor-primary);
-    color: var(--cor-primary);
-  }
-}
 
 /* ── Seção de escrita ── */
 .write-section {
