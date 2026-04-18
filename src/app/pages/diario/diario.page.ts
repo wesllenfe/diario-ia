@@ -11,8 +11,31 @@ import {
 import { addIcons } from 'ionicons';
 import {
   logOutOutline, arrowUpOutline, alertCircleOutline,
-  pencilOutline, trashOutline,
+  pencilOutline, trashOutline, bulbOutline, closeOutline,
 } from 'ionicons/icons';
+
+const PERGUNTAS: string[] = [
+  'Qual foi o momento mais marcante do seu dia hoje?',
+  'O que te deixou com energia hoje? E o que te drenou?',
+  'Existe algo que você queria ter dito, mas não disse?',
+  'Qual foi o maior desafio que você enfrentou hoje?',
+  'O que você aprendeu sobre si mesmo hoje?',
+  'Se você pudesse mudar algo no seu dia, o que seria?',
+  'Quem ou o que te fez sorrir hoje?',
+  'Tem algo te preocupando que você ainda não colocou em palavras?',
+  'Como está seu corpo hoje? Energia, tensão, descanso?',
+  'Existe algo pelo qual você é grato hoje, por menor que seja?',
+  'O que você está evitando pensar ultimamente?',
+  'Qual decisão foi mais difícil de tomar hoje?',
+  'Você se cuidou hoje? De que forma?',
+  'Tem algo que está pesando no seu coração agora?',
+  'Qual pensamento ficou voltando na sua cabeça hoje?',
+  'Você está sendo gentil consigo mesmo ultimamente?',
+  'O que você precisaria para se sentir melhor amanhã?',
+  'Tem alguma conversa que você precisa ter mas está adiando?',
+  'Como você descreveria seu humor hoje em uma cor? Por quê?',
+  'O que hoje te ensinou algo que ontem você não sabia?',
+];
 import { SupabaseService, EntradaDiario } from '../../services/supabase.service';
 import { GroqService } from '../../services/groq.service';
 import { BottomNavComponent } from '../../components/bottom-nav.component';
@@ -53,6 +76,7 @@ export class DiarioPage implements OnInit {
   carregando = signal(false);
   erro = signal('');
   removendo = signal(new Set<string>());
+  pergunta = signal<string | null>(null);
 
   readonly emojiMap = EMOCAO_EMOJI;
   readonly corMap = EMOCAO_COR;
@@ -64,7 +88,7 @@ export class DiarioPage implements OnInit {
     private alert: AlertController,
     private toast: ToastController,
   ) {
-    addIcons({ logOutOutline, arrowUpOutline, alertCircleOutline, pencilOutline, trashOutline });
+    addIcons({ logOutOutline, arrowUpOutline, alertCircleOutline, pencilOutline, trashOutline, bulbOutline, closeOutline });
   }
 
   async ngOnInit() {
@@ -85,6 +109,14 @@ export class DiarioPage implements OnInit {
   async refresh(event: CustomEvent) {
     await this.carregarEntradas();
     (event.target as HTMLIonRefresherElement).complete();
+  }
+
+  sortearPergunta() {
+    const atual = this.pergunta();
+    let nova: string;
+    do { nova = PERGUNTAS[Math.floor(Math.random() * PERGUNTAS.length)]; }
+    while (nova === atual && PERGUNTAS.length > 1);
+    this.pergunta.set(nova);
   }
 
   async salvar() {

@@ -10,24 +10,31 @@ App de diário pessoal mobile-first onde o usuário escreve livremente e a IA an
 | Mobile | Ionic 8 |
 | Backend / Auth | Supabase |
 | IA | Groq API — `llama-3.1-8b-instant` |
-| Deploy | Vercel |
 
 ## Funcionalidades
 
 - **Autenticação** — login e cadastro com e-mail/senha via Supabase Auth
 - **Diário** — campo de escrita livre com salvamento imediato
+- **Perguntas guiadas** — botão "Me ajude a começar" sorteia uma pergunta reflexiva para inspirar a escrita
 - **Análise de IA** — processamento em background a cada entrada salva:
   - Humor do dia (escala 1–10)
   - Emoção principal detectada
   - Temas identificados (trabalho, família, saúde...)
-- **Dashboard** *(Fase 3 — em breve)*
+- **Dashboard de insights:**
+  - Streak de dias consecutivos escritos
+  - Humor médio dos últimos 7 dias
+  - Gráfico de barras semanal
+  - Gráfico de tendência dos últimos 30 dias (SVG)
+  - Emoção predominante da semana
+  - Temas recorrentes com tamanho proporcional à frequência
+  - Insight semanal gerado pela IA
 
 ## Setup
 
 ### 1. Clonar e instalar
 
 ```bash
-git clone https://github.com/seu-usuario/diario-ia.git
+git clone https://github.com/wesllenfe/diario-ia.git
 cd diario-ia/diario-app
 npm install
 ```
@@ -52,7 +59,7 @@ export const environment = {
 ### 3. Criar conta no Supabase
 
 1. Acesse [supabase.com](https://supabase.com) e crie um projeto
-2. Em **SQL Editor**, execute `supabase-setup.sql` (Fase 1) e `supabase-fase2.sql` (Fase 2)
+2. Em **SQL Editor**, execute `supabase-setup.sql` e depois `supabase-fase2.sql`
 3. Copie a **Project URL** e a **publishable key** para `environment.ts`
 
 ### 4. Criar conta no Groq
@@ -75,26 +82,29 @@ Acesse `http://localhost:8100`
 ```
 src/
 ├── app/
+│   ├── components/
+│   │   └── bottom-nav.component.ts  # Navegação inferior
 │   ├── guards/
-│   │   └── auth.guard.ts          # Protege rotas autenticadas
+│   │   └── auth.guard.ts            # Protege rotas autenticadas
 │   ├── pages/
-│   │   ├── auth/                  # Login e cadastro
-│   │   ├── diario/                # Escrita + listagem de entradas
-│   │   └── dashboard/             # Insights (Fase 3)
+│   │   ├── auth/                    # Login e cadastro
+│   │   ├── diario/                  # Escrita + listagem + perguntas guiadas
+│   │   └── dashboard/               # Métricas + gráficos + insights IA
 │   ├── services/
-│   │   ├── supabase.service.ts    # Auth + CRUD entradas
-│   │   └── groq.service.ts        # Integração com IA
+│   │   ├── supabase.service.ts      # Auth + CRUD entradas
+│   │   ├── groq.service.ts          # Análise de entrada + insight semanal
+│   │   └── dashboard.service.ts     # Agregação de métricas
 │   └── app.routes.ts
 ├── environments/
-│   ├── environment.example.ts     # Template — commitar
-│   └── environment.ts             # Chaves reais — NO .gitignore
+│   ├── environment.example.ts       # Template — versionado
+│   └── environment.ts               # Chaves reais — no .gitignore
 └── theme/
-    └── variables.scss             # Design system (Sage + Cream)
+    └── variables.scss               # Design system (Sage + Cream)
 ```
 
 ## SQL
 
-Execute os arquivos na ordem no Supabase SQL Editor:
+Execute na ordem no Supabase SQL Editor:
 
 1. `supabase-setup.sql` — cria tabela `entradas` com RLS
 2. `supabase-fase2.sql` — adiciona colunas de análise de IA
@@ -105,4 +115,4 @@ Execute os arquivos na ordem no Supabase SQL Editor:
 |---|---|---|
 | 1 | ✅ | Auth + diário + listagem |
 | 2 | ✅ | Análise de IA com Groq |
-| 3 | 🔜 | Dashboard com gráficos de humor |
+| 3 | ✅ | Dashboard com métricas, gráficos e insight IA |

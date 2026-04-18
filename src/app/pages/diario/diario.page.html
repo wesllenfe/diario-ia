@@ -20,10 +20,22 @@
 
   <!-- Área de escrita -->
   <div class="write-section animate-in">
+
+    <!-- Card de pergunta guiada -->
+    @if (pergunta()) {
+      <div class="pergunta-card">
+        <ion-icon name="bulb-outline" class="pergunta-icon" />
+        <p class="pergunta-texto">{{ pergunta() }}</p>
+        <button class="pergunta-close" (click)="pergunta.set(null)">
+          <ion-icon name="close-outline" />
+        </button>
+      </div>
+    }
+
     <div class="write-card" [class.focused]="escrevendo()">
       <ion-textarea
         class="write-area"
-        placeholder="Como você está se sentindo hoje?"
+        [placeholder]="pergunta() ? 'Escreva sua resposta aqui...' : 'Como você está se sentindo hoje?'"
         autoGrow="true"
         rows="4"
         [ngModel]="texto()"
@@ -46,6 +58,12 @@
         </button>
       </div>
     </div>
+
+    <!-- Botão perguntas guiadas -->
+    <button class="prompt-btn" (click)="sortearPergunta()">
+      <ion-icon name="bulb-outline" />
+      <span>{{ pergunta() ? 'Outra pergunta' : 'Me ajude a começar' }}</span>
+    </button>
 
     @if (erro()) {
       <div class="feedback feedback--error">

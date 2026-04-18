@@ -95,6 +95,55 @@
         </div>
       </section>
 
+      <!-- Tendência 30 dias -->
+      @if (temTendencia()) {
+        <section class="section tendencia-section animate-in" style="animation-delay:120ms">
+          <h2 class="section-title">Tendência — 30 dias</h2>
+          <div class="svg-wrap">
+            <svg
+              viewBox="0 0 300 80"
+              preserveAspectRatio="none"
+              class="tendencia-svg"
+              aria-hidden="true"
+            >
+              <!-- Linhas de referência -->
+              <line x1="0" y1="26" x2="300" y2="26" class="ref-line" />
+              <line x1="0" y1="48" x2="300" y2="48" class="ref-line" />
+
+              <!-- Área preenchida -->
+              <path [attr.d]="pathArea(dados()!.humorTendencia30)" class="area-fill" />
+
+              <!-- Linha principal -->
+              <path [attr.d]="pathLinha(dados()!.humorTendencia30)" class="trend-line" />
+
+              <!-- Pontos -->
+              @for (p of pontosLinha(dados()!.humorTendencia30); track p.x) {
+                <circle [attr.cx]="p.x" [attr.cy]="p.y" r="2.5" class="trend-dot" />
+              }
+            </svg>
+
+            <!-- Labels do eixo X -->
+            <div class="svg-labels">
+              @for (d of dados()!.humorTendencia30; track $index) {
+                @if (d.mostrarLabel) {
+                  <span
+                    class="svg-label"
+                    [style.left.%]="($index / 29) * 100"
+                  >{{ d.label }}</span>
+                }
+              }
+            </div>
+          </div>
+
+          <!-- Legenda de referência -->
+          <div class="ref-legend">
+            <span><span class="ref-dot alta"></span> alto (7–10)</span>
+            <span><span class="ref-dot media"></span> médio (4–6)</span>
+            <span><span class="ref-dot baixa"></span> baixo (1–3)</span>
+          </div>
+        </section>
+      }
+
       <!-- Emoção + Insight em grid -->
       <div class="mid-grid animate-in" style="animation-delay:160ms">
 

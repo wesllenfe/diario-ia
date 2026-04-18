@@ -13,11 +13,18 @@ export interface TemaFreq {
   peso: number; // 0.6 – 1.4 para font-size relativo (em)
 }
 
+export interface DiaTendencia {
+  score: number | null;
+  label: string;   // "1", "2", … ou "1 abr"
+  mostrarLabel: boolean;
+}
+
 export interface DashboardData {
   streak: number;
   humorMedio7Dias: number | null;
   totalMes: number;
   humorPorDia: DiaHumor[];
+  humorTendencia30: DiaTendencia[];
   temas: TemaFreq[];
   emocaoPredominante: string | null;
   corEmocao: 'positiva' | 'negativa' | 'neutra';
@@ -104,11 +111,28 @@ export class DashboardService {
         : NEGATIVAS.has(emocaoPredominante) ? 'negativa' : 'neutra'
       : 'neutra';
 
+    // Tendência 30 dias
+    const humorTendencia30: DiaTendencia[] = [];
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(agora.getTime() - i * 86_400_000);
+      const lista = porDia.get(diaDe(d)) ?? [];
+      const comScore = lista.filter(e => e.humor_score != null);
+      const score = comScore.length > 0
+        ? comScore.reduce((s, e) => s + e.humor_score!, 0) / comScore.length
+        : null;
+      const mostrarLabel = d.getDate() === 1 || i === 29 || i === 0 || i === 14;
+      const label = mostrarLabel
+        ? d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' })
+        : '';
+      humorTendencia30.push({ score, label, mostrarLabel });
+    }
+
     return {
       streak,
       humorMedio7Dias,
       totalMes,
       humorPorDia,
+      humorTendencia30,
       temas,
       emocaoPredominante,
       corEmocao,

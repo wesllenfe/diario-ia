@@ -191,6 +191,89 @@
   line-height: 1.2;
 }
 
+/* ── Tendência 30 dias (SVG) ── */
+.tendencia-section { overflow: visible; }
+
+.svg-wrap {
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.tendencia-svg {
+  width: 100%;
+  height: 90px;
+  display: block;
+  overflow: visible;
+}
+
+.ref-line {
+  stroke: var(--cor-border);
+  stroke-width: 0.5;
+  stroke-dasharray: 2 3;
+}
+
+.area-fill {
+  fill: rgba(61, 110, 94, 0.09);
+}
+
+.trend-line {
+  fill: none;
+  stroke: var(--cor-primary);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trend-dot {
+  fill: var(--cor-white);
+  stroke: var(--cor-primary);
+  stroke-width: 1.5;
+}
+
+.svg-labels {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+}
+
+.svg-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  color: var(--cor-ink-muted);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.ref-legend {
+  display: flex;
+  gap: var(--sp-4);
+  margin-top: var(--sp-2);
+  flex-wrap: wrap;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.65rem;
+    color: var(--cor-ink-muted);
+  }
+}
+
+.ref-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+
+  &.alta  { background: var(--cor-primary); }
+  &.media { background: var(--cor-medium); }
+  &.baixa { background: var(--cor-accent); }
+}
+
 /* ── Gráfico de barras ── */
 .chart-wrap {
   display: flex;
