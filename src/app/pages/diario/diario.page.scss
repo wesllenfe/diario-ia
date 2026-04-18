@@ -1,0 +1,391 @@
+.diario-content {
+  --background: var(--cor-background);
+  --padding-bottom: var(--sp-12);
+}
+
+/* ── Toolbar ── */
+.toolbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--sp-2) 0;
+}
+
+.toolbar-date {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+
+  .toolbar-day {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--cor-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .toolbar-full-date {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cor-ink);
+    letter-spacing: -0.01em;
+  }
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1.5px solid var(--cor-border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--cor-ink-muted);
+  transition: all var(--ease-fast);
+
+  ion-icon { font-size: 1.1rem; }
+
+  &:hover {
+    background: var(--cor-primary-ghost);
+    border-color: var(--cor-primary);
+    color: var(--cor-primary);
+  }
+}
+
+/* ── Seção de escrita ── */
+.write-section {
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.write-card {
+  background: var(--cor-white);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--cor-border);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--ease-fast), box-shadow var(--ease-fast);
+
+  &.focused {
+    border-color: var(--cor-primary);
+    box-shadow: 0 0 0 3px var(--cor-primary-ghost), var(--shadow-sm);
+  }
+
+  .write-area {
+    --background: transparent;
+    --padding-start: var(--sp-4);
+    --padding-end: var(--sp-4);
+    --padding-top: var(--sp-4);
+    --padding-bottom: var(--sp-3);
+    --color: var(--cor-ink);
+    font-family: var(--font-serif) !important;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    min-height: 110px;
+  }
+
+  .write-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-2) var(--sp-3) var(--sp-3);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity var(--ease-base), transform var(--ease-base);
+    pointer-events: none;
+
+    &.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+
+  .char-count {
+    font-size: 0.75rem;
+    color: var(--cor-medium);
+    font-weight: 300;
+  }
+}
+
+.save-btn {
+  width: 36px;
+  height: 36px;
+  background: var(--cor-accent);
+  border: none;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(201, 136, 58, 0.38);
+  transition: all var(--ease-bounce);
+
+  ion-icon { font-size: 1rem; color: var(--cor-white); }
+  ion-spinner { width: 16px; height: 16px; color: var(--cor-white); }
+
+  &:not(:disabled):active { transform: scale(0.92); }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+/* ── Feedback ── */
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  animation: fadeSlideUp var(--ease-base) forwards;
+
+  &--error {
+    background: rgba(220, 38, 38, 0.07);
+    color: #b91c1c;
+    ion-icon { color: #dc2626; }
+  }
+
+  ion-icon { font-size: 1rem; flex-shrink: 0; }
+}
+
+/* ── Seção de entradas ── */
+.entries-section {
+  padding: 0 var(--sp-4) var(--sp-8);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+
+  .section-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cor-ink-muted);
+    margin: 0;
+  }
+
+  .section-count {
+    font-size: 0.7rem;
+    font-weight: 500;
+    background: var(--cor-accent-ghost);
+    color: var(--cor-accent);
+    padding: 1px 7px;
+    border-radius: var(--radius-full);
+  }
+}
+
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-10);
+  ion-spinner { color: var(--cor-medium); }
+}
+
+/* ── Estado vazio ── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--sp-10) var(--sp-4);
+  gap: var(--sp-2);
+  text-align: center;
+
+  .empty-icon {
+    font-size: 2rem;
+    color: var(--cor-light);
+    margin-bottom: var(--sp-2);
+  }
+
+  p { margin: 0; font-weight: 500; color: var(--cor-ink-muted); font-size: 0.95rem; }
+  span { font-size: 0.83rem; color: var(--cor-medium); font-weight: 300; }
+}
+
+/* ── Cards de entrada ── */
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.entry-card {
+  background: var(--cor-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--cor-border);
+  padding: var(--sp-4);
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  transition: box-shadow var(--ease-fast), transform var(--ease-fast);
+
+  &:active { transform: scale(0.99); box-shadow: none; }
+}
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+}
+
+.entry-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+}
+
+.entry-date {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--cor-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.entry-time {
+  font-size: 0.72rem;
+  color: var(--cor-medium);
+  font-weight: 300;
+
+  &::before { content: '·'; margin-right: var(--sp-2); }
+}
+
+/* ── Badge de emoção ── */
+.emocao-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 500;
+  animation: fadeSlideUp var(--ease-base) forwards;
+
+  &.emocao--positiva {
+    background: rgba(61, 110, 94, 0.1);
+    color: var(--cor-primary-dark);
+  }
+
+  &.emocao--negativa {
+    background: rgba(201, 136, 58, 0.12);
+    color: #9a5f1a;
+  }
+
+  &.emocao--neutra {
+    background: rgba(107, 104, 96, 0.1);
+    color: var(--cor-ink-muted);
+  }
+
+  .emocao-emoji { font-size: 0.85rem; }
+}
+
+/* ── Indicador "analisando" ── */
+.ia-pending {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  color: var(--cor-medium);
+
+  ion-spinner { width: 12px; height: 12px; color: var(--cor-medium); }
+}
+
+/* ── Texto da entrada ── */
+.entry-text {
+  font-family: var(--font-serif);
+  font-size: 0.93rem;
+  line-height: 1.65;
+  color: var(--cor-ink);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Barra de humor ── */
+.humor-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.humor-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cor-ink-muted);
+  width: 34px;
+  flex-shrink: 0;
+}
+
+.humor-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--cor-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.humor-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--ease-slow);
+
+  &.humor-fill--positiva { background: var(--cor-primary); }
+  &.humor-fill--negativa { background: var(--cor-accent); }
+  &.humor-fill--neutra   { background: var(--cor-medium); }
+}
+
+.humor-score {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--cor-ink-muted);
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Temas ── */
+.temas-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+}
+
+.tema-tag {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: var(--cor-ink-muted);
+  background: var(--cor-background);
+  border: 1px solid var(--cor-border);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.02em;
+}
+
+/* ── Toast da IA ── */
+:host ::ng-deep .toast-ia {
+  --background: var(--cor-ink);
+  --color: var(--cor-white);
+  --border-radius: var(--radius-md);
+  --box-shadow: var(--shadow-lg);
+  font-size: 0.875rem;
+  font-family: var(--font-sans);
+}

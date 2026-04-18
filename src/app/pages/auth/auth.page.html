@@ -1,0 +1,86 @@
+<ion-content [fullscreen]="true" class="auth-content">
+  <div class="auth-wrap">
+
+    <div class="auth-hero animate-in">
+      <div class="auth-logo-mark">
+        <ion-icon name="book-outline" />
+      </div>
+      <h1 class="auth-title">Diário</h1>
+      <p class="auth-sub">Escreva. Reflita. Evolua.</p>
+    </div>
+
+    <div class="auth-card animate-in" style="animation-delay: 80ms">
+
+      <div class="auth-toggle">
+        <button
+          class="toggle-btn"
+          [class.active]="modo() === 'entrar'"
+          (click)="alternarModo('entrar')"
+        >Entrar</button>
+        <button
+          class="toggle-btn"
+          [class.active]="modo() === 'cadastrar'"
+          (click)="alternarModo('cadastrar')"
+        >Cadastrar</button>
+      </div>
+
+      <div class="form-fields">
+        <div class="field-group">
+          <label class="field-label">E-mail</label>
+          <div class="field-wrap">
+            <ion-icon name="mail-outline" class="field-icon" />
+            <ion-input
+              type="email"
+              placeholder="seu@email.com"
+              [ngModel]="email()"
+              (ngModelChange)="email.set($event)"
+              autocomplete="email"
+            />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Senha</label>
+          <div class="field-wrap">
+            <ion-icon name="lock-closed-outline" class="field-icon" />
+            <ion-input
+              type="password"
+              placeholder="••••••••"
+              [ngModel]="senha()"
+              (ngModelChange)="senha.set($event)"
+              autocomplete="current-password"
+            />
+          </div>
+        </div>
+      </div>
+
+      @if (erro()) {
+        <div class="feedback feedback--error">
+          <ion-icon name="alert-circle-outline" />
+          <span>{{ erro() }}</span>
+        </div>
+      }
+      @if (sucesso()) {
+        <div class="feedback feedback--success">
+          <ion-icon name="checkmark-circle-outline" />
+          <span>{{ sucesso() }}</span>
+        </div>
+      }
+
+      <button
+        class="submit-btn"
+        (click)="submeter()"
+        [disabled]="carregando()"
+        [class.loading]="carregando()"
+      >
+        @if (carregando()) {
+          <ion-spinner name="crescent" />
+        } @else {
+          {{ modo() === 'entrar' ? 'Entrar' : 'Criar conta' }}
+        }
+      </button>
+
+    </div>
+
+  </div>
+</ion-content>

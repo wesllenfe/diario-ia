@@ -1,0 +1,239 @@
+.auth-content {
+  --background: var(--cor-background);
+
+  &::before {
+    content: '';
+    position: fixed;
+    top: -120px;
+    right: -80px;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(61,110,94,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.auth-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: var(--sp-8) var(--sp-6);
+  gap: var(--sp-8);
+}
+
+/* ── Hero ── */
+.auth-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  text-align: center;
+}
+
+.auth-logo-mark {
+  width: 56px;
+  height: 56px;
+  background: var(--cor-primary);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--sp-2);
+  box-shadow: var(--shadow-md);
+
+  ion-icon {
+    font-size: 1.6rem;
+    color: var(--cor-white);
+  }
+}
+
+.auth-title {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--cor-ink);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.auth-sub {
+  font-size: 0.9rem;
+  color: var(--cor-ink-muted);
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* ── Card ── */
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--cor-white);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-6);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  border: 1px solid var(--cor-border);
+}
+
+/* ── Toggle ── */
+.auth-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-1);
+  background: var(--cor-background);
+  border-radius: var(--radius-md);
+  padding: 3px;
+}
+
+.toggle-btn {
+  padding: var(--sp-2) var(--sp-3);
+  border: none;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--cor-ink-muted);
+  cursor: pointer;
+  transition: all var(--ease-base);
+
+  &.active {
+    background: var(--cor-white);
+    color: var(--cor-ink);
+    font-weight: 500;
+    box-shadow: var(--shadow-xs);
+  }
+}
+
+/* ── Campos ── */
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.field-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--cor-ink-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding-left: var(--sp-1);
+}
+
+.field-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--cor-surface);
+  border: 1.5px solid var(--cor-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--sp-3);
+  gap: var(--sp-2);
+  transition: border-color var(--ease-fast), box-shadow var(--ease-fast);
+
+  &:focus-within {
+    border-color: var(--cor-primary);
+    box-shadow: 0 0 0 3px var(--cor-primary-ghost);
+    background: var(--cor-white);
+  }
+
+  .field-icon {
+    font-size: 1rem;
+    color: var(--cor-medium);
+    flex-shrink: 0;
+    transition: color var(--ease-fast);
+  }
+
+  &:focus-within .field-icon {
+    color: var(--cor-primary);
+  }
+
+  ion-input {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --background: transparent;
+    font-size: 0.95rem;
+    flex: 1;
+  }
+}
+
+/* ── Feedback ── */
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+
+  &--error {
+    background: rgba(220, 38, 38, 0.07);
+    color: #b91c1c;
+
+    ion-icon { color: #dc2626; }
+  }
+
+  &--success {
+    background: rgba(22, 163, 74, 0.07);
+    color: #15803d;
+
+    ion-icon { color: #16a34a; }
+  }
+
+  ion-icon { font-size: 1rem; flex-shrink: 0; }
+}
+
+/* ── Botão submit ── */
+.submit-btn {
+  width: 100%;
+  height: 48px;
+  background: var(--cor-primary);
+  color: var(--cor-white);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  transition: background var(--ease-fast), transform var(--ease-fast), box-shadow var(--ease-fast);
+  box-shadow: 0 2px 8px rgba(65, 128, 171, 0.3);
+
+  &:not(:disabled):hover {
+    background: var(--cor-primary-dark);
+    box-shadow: 0 4px 12px rgba(65, 128, 171, 0.38);
+  }
+
+  &:not(:disabled):active {
+    transform: scale(0.98);
+  }
+
+  &:disabled, &.loading {
+    opacity: 0.65;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  ion-spinner {
+    width: 18px;
+    height: 18px;
+    color: var(--cor-white);
+  }
+}

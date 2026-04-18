@@ -1,0 +1,131 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="toolbar-inner">
+      <div class="toolbar-date">
+        <span class="toolbar-day">{{ hoje | date:'EEEE' | titlecase }}</span>
+        <span class="toolbar-full-date">{{ hoje | date:"d 'de' MMMM" }}</span>
+      </div>
+      <button class="icon-btn" (click)="sair()" title="Sair">
+        <ion-icon name="log-out-outline" />
+      </button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="diario-content">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-outline" refreshingSpinner="crescent" />
+  </ion-refresher>
+
+  <!-- Área de escrita -->
+  <div class="write-section animate-in">
+    <div class="write-card" [class.focused]="escrevendo()">
+      <ion-textarea
+        class="write-area"
+        placeholder="Como você está se sentindo hoje?"
+        autoGrow="true"
+        rows="4"
+        [ngModel]="texto()"
+        (ngModelChange)="texto.set($event)"
+        (ionFocus)="escrevendo.set(true)"
+        (ionBlur)="escrevendo.set(false)"
+      />
+      <div class="write-footer" [class.visible]="texto().trim().length > 0">
+        <span class="char-count">{{ texto().length }} caracteres</span>
+        <button
+          class="save-btn"
+          (click)="salvar()"
+          [disabled]="salvando() || !texto().trim()"
+        >
+          @if (salvando()) {
+            <ion-spinner name="crescent" />
+          } @else {
+            <ion-icon name="arrow-up-outline" />
+          }
+        </button>
+      </div>
+    </div>
+
+    @if (erro()) {
+      <div class="feedback feedback--error">
+        <ion-icon name="alert-circle-outline" />
+        <span>{{ erro() }}</span>
+      </div>
+    }
+  </div>
+
+  <!-- Lista de entradas -->
+  <div class="entries-section">
+    <div class="section-header">
+      <h2 class="section-title">Entradas</h2>
+      @if (!carregando()) {
+        <span class="section-count">{{ entradas().length }}</span>
+      }
+    </div>
+
+    @if (carregando()) {
+      <div class="loading-state">
+        <ion-spinner name="crescent" />
+      </div>
+    } @else if (entradas().length === 0) {
+      <div class="empty-state animate-in">
+        <ion-icon name="pencil-outline" class="empty-icon" />
+        <p>Nenhuma entrada ainda.</p>
+        <span>Comece escrevendo como você está se sentindo.</span>
+      </div>
+    } @else {
+      <div class="entries-list">
+        @for (entrada of entradas(); track entrada.id; let i = $index) {
+          <div class="entry-card animate-in" [style.animation-delay]="i * 40 + 'ms'">
+
+            <div class="entry-header">
+              <div class="entry-meta">
+                <span class="entry-date">{{ entrada.created_at | date:'d MMM' }}</span>
+                <span class="entry-time">{{ entrada.created_at | date:'HH:mm' }}</span>
+              </div>
+
+              @if (entrada.emocao) {
+                <div class="emocao-badge" [class]="'emocao--' + corPara(entrada.emocao)">
+                  <span class="emocao-emoji">{{ emojiPara(entrada.emocao) }}</span>
+                  <span class="emocao-label">{{ entrada.emocao }}</span>
+                </div>
+              } @else if (!entrada.processado) {
+                <div class="ia-pending">
+                  <ion-spinner name="dots" />
+                  <span>analisando</span>
+                </div>
+              }
+            </div>
+
+            <p class="entry-text">{{ entrada.conteudo }}</p>
+
+            @if (entrada.humor_score) {
+              <div class="humor-row">
+                <span class="humor-label">humor</span>
+                <div class="humor-bar">
+                  <div
+                    class="humor-fill"
+                    [class]="'humor-fill--' + corPara(entrada.emocao)"
+                    [style.width.%]="entrada.humor_score * 10"
+                  ></div>
+                </div>
+                <span class="humor-score">{{ entrada.humor_score }}/10</span>
+              </div>
+            }
+
+            @if (entrada.temas?.length) {
+              <div class="temas-row">
+                @for (tema of entrada.temas!; track tema) {
+                  <span class="tema-tag">{{ tema }}</span>
+                }
+              </div>
+            }
+
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+</ion-content>

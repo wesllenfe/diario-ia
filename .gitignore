@@ -1,0 +1,64 @@
+# ── Segurança — NUNCA commitar chaves reais ──────────────────────────────────
+src/environments/environment.ts
+src/environments/environment.prod.ts
+
+# ── Node ─────────────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# ── Angular/Ionic build ───────────────────────────────────────────────────────
+/dist
+/www
+/tmp
+/out-tsc
+/.angular
+/.sourcemaps
+/.versions
+
+# ── Capacitor / mobile ────────────────────────────────────────────────────────
+/android
+/ios
+/platforms
+/plugins
+
+# ── Cache e temporários ──────────────────────────────────────────────────────
+.sass-cache/
+/.nx
+/coverage
+/connect.lock
+/libpeerconnection.log
+testem.log
+/typings
+*.log
+*.tmp
+*.tmp.*
+*~
+*.sw[mnpcod]
+.tmp
+
+# ── IDEs ─────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# ── Sistema operacional ──────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+$RECYCLE.BIN/
+UserInterfaceState.xcuserstate
+
+# ── Ionic Cloud ──────────────────────────────────────────────────────────────
+/.ionic

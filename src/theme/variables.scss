@@ -1,0 +1,67 @@
+:root {
+  /* ── Paleta Sage + Cream ── */
+  --cor-primary: #3d6e5e;
+  --cor-primary-dark: #2e5347;
+  --cor-primary-light: #4f8a77;
+  --cor-primary-ghost: rgba(61, 110, 94, 0.08);
+  --cor-accent: #c9883a;          /* âmbar quente — CTA, datas */
+  --cor-accent-ghost: rgba(201, 136, 58, 0.1);
+  --cor-white: #ffffff;
+  --cor-medium: #8ca99f;
+  --cor-light: #c0d4ce;
+  --cor-background: #f0ece3;      /* pergaminho */
+  --cor-surface: #f8f5ef;         /* superfície ainda mais clara */
+  --cor-ink: #1c1c1a;
+  --cor-ink-muted: #6b6860;
+  --cor-border: rgba(61, 110, 94, 0.13);
+  --cor-border-focus: rgba(61, 110, 94, 0.38);
+
+  /* Tipografia */
+  --font-serif: 'Lora', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+
+  /* Espaçamento */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+
+  /* Sombras — tinted com o sage */
+  --shadow-xs: 0 1px 2px rgba(30, 60, 50, 0.06);
+  --shadow-sm: 0 2px 8px rgba(30, 60, 50, 0.09), 0 1px 2px rgba(30, 60, 50, 0.05);
+  --shadow-md: 0 4px 16px rgba(30, 60, 50, 0.10), 0 2px 4px rgba(30, 60, 50, 0.06);
+  --shadow-lg: 0 8px 32px rgba(30, 60, 50, 0.12), 0 4px 8px rgba(30, 60, 50, 0.07);
+
+  /* Bordas */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  /* Transições */
+  --ease-fast: 150ms ease;
+  --ease-base: 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Ionic overrides */
+  --ion-font-family: var(--font-sans);
+  --ion-background-color: var(--cor-background);
+  --ion-text-color: var(--cor-ink);
+  --ion-color-primary: var(--cor-primary);
+  --ion-color-primary-rgb: 61, 110, 94;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: var(--cor-primary-dark);
+  --ion-color-primary-tint: var(--cor-primary-light);
+  --ion-toolbar-background: var(--cor-surface);
+  --ion-toolbar-color: var(--cor-ink);
+  --ion-toolbar-border-color: var(--cor-border);
+  --ion-item-background: transparent;
+}
