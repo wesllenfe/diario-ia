@@ -77,52 +77,69 @@
     } @else {
       <div class="entries-list">
         @for (entrada of entradas(); track entrada.id; let i = $index) {
-          <div class="entry-card animate-in" [style.animation-delay]="i * 40 + 'ms'">
+          <ion-item-sliding #sliding>
 
-            <div class="entry-header">
-              <div class="entry-meta">
-                <span class="entry-date">{{ entrada.created_at | date:'d MMM' }}</span>
-                <span class="entry-time">{{ entrada.created_at | date:'HH:mm' }}</span>
-              </div>
+            <ion-item lines="none" class="entry-item">
+              <div
+                class="entry-card animate-in"
+                [class.removing]="estaRemovendo(entrada.id)"
+                [style.animation-delay]="i * 40 + 'ms'"
+              >
+                <div class="entry-header">
+                  <div class="entry-meta">
+                    <span class="entry-date">{{ entrada.created_at | date:'d MMM' }}</span>
+                    <span class="entry-time">{{ entrada.created_at | date:'HH:mm' }}</span>
+                  </div>
 
-              @if (entrada.emocao) {
-                <div class="emocao-badge" [class]="'emocao--' + corPara(entrada.emocao)">
-                  <span class="emocao-emoji">{{ emojiPara(entrada.emocao) }}</span>
-                  <span class="emocao-label">{{ entrada.emocao }}</span>
+                  @if (entrada.emocao) {
+                    <div class="emocao-badge" [class]="'emocao--' + corPara(entrada.emocao)">
+                      <span class="emocao-emoji">{{ emojiPara(entrada.emocao) }}</span>
+                      <span class="emocao-label">{{ entrada.emocao }}</span>
+                    </div>
+                  } @else if (!entrada.processado) {
+                    <div class="ia-pending">
+                      <ion-spinner name="dots" />
+                      <span>analisando</span>
+                    </div>
+                  }
                 </div>
-              } @else if (!entrada.processado) {
-                <div class="ia-pending">
-                  <ion-spinner name="dots" />
-                  <span>analisando</span>
-                </div>
-              }
-            </div>
 
-            <p class="entry-text">{{ entrada.conteudo }}</p>
+                <p class="entry-text">{{ entrada.conteudo }}</p>
 
-            @if (entrada.humor_score) {
-              <div class="humor-row">
-                <span class="humor-label">humor</span>
-                <div class="humor-bar">
-                  <div
-                    class="humor-fill"
-                    [class]="'humor-fill--' + corPara(entrada.emocao)"
-                    [style.width.%]="entrada.humor_score * 10"
-                  ></div>
-                </div>
-                <span class="humor-score">{{ entrada.humor_score }}/10</span>
-              </div>
-            }
+                @if (entrada.humor_score) {
+                  <div class="humor-row">
+                    <span class="humor-label">humor</span>
+                    <div class="humor-bar">
+                      <div
+                        class="humor-fill"
+                        [class]="'humor-fill--' + corPara(entrada.emocao)"
+                        [style.width.%]="entrada.humor_score * 10"
+                      ></div>
+                    </div>
+                    <span class="humor-score">{{ entrada.humor_score }}/10</span>
+                  </div>
+                }
 
-            @if (entrada.temas?.length) {
-              <div class="temas-row">
-                @for (tema of entrada.temas!; track tema) {
-                  <span class="tema-tag">{{ tema }}</span>
+                @if (entrada.temas?.length) {
+                  <div class="temas-row">
+                    @for (tema of entrada.temas!; track tema) {
+                      <span class="tema-tag">{{ tema }}</span>
+                    }
+                  </div>
                 }
               </div>
-            }
+            </ion-item>
 
-          </div>
+            <ion-item-options side="end">
+              <ion-item-option class="delete-option" (click)="confirmarDelete(entrada, sliding)">
+                <div class="delete-btn-inner">
+                  <ion-icon name="trash-outline" />
+                  <span>Remover</span>
+                </div>
+              </ion-item-option>
+            </ion-item-options>
+
+          </ion-item-sliding>
         }
       </div>
     }

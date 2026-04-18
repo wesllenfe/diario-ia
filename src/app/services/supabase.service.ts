@@ -78,6 +78,14 @@ export class SupabaseService {
     if (error) throw error;
   }
 
+  async deletarEntrada(id: string): Promise<void> {
+    const { error } = await this.supabase
+      .from('entradas')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+  }
+
   async buscarEntradas(): Promise<EntradaDiario[]> {
     const { data, error } = await this.supabase
       .from('entradas')

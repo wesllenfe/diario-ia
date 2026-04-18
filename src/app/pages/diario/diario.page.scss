@@ -221,6 +221,25 @@
   gap: var(--sp-3);
 }
 
+/* ion-item-sliding wrapper — sem fundo/padding do Ionic */
+ion-item-sliding {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.entry-item {
+  --background: transparent;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --min-height: 0;
+}
+
+@keyframes slideOutRight {
+  to { opacity: 0; transform: translateX(32px); }
+}
+
 .entry-card {
   background: var(--cor-white);
   border-radius: var(--radius-lg);
@@ -230,9 +249,32 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
+  width: 100%;
   transition: box-shadow var(--ease-fast), transform var(--ease-fast);
 
   &:active { transform: scale(0.99); box-shadow: none; }
+
+  &.removing {
+    animation: slideOutRight 0.3s var(--ease-base) forwards;
+    pointer-events: none;
+  }
+}
+
+/* ── Botão de deletar (swipe) ── */
+.delete-option {
+  --background: #e63946;
+  --color: white;
+  width: 80px;
+}
+
+.delete-btn-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  ion-icon { font-size: 1.2rem; }
+  span { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.03em; }
 }
 
 .entry-header {
@@ -380,12 +422,51 @@
   letter-spacing: 0.02em;
 }
 
-/* ── Toast da IA ── */
-:host ::ng-deep .toast-ia {
-  --background: var(--cor-ink);
-  --color: var(--cor-white);
+/* ── Toasts ── */
+:host ::ng-deep .toast-ia,
+:host ::ng-deep .toast-neutro,
+:host ::ng-deep .toast-erro {
   --border-radius: var(--radius-md);
   --box-shadow: var(--shadow-lg);
   font-size: 0.875rem;
-  font-family: var(--font-sans);
 }
+
+:host ::ng-deep .toast-ia,
+:host ::ng-deep .toast-neutro {
+  --background: var(--cor-ink);
+  --color: var(--cor-white);
+}
+
+:host ::ng-deep .toast-erro {
+  --background: #e63946;
+  --color: white;
+}
+
+/* ── Alert de confirmação (global via ::ng-deep) ── */
+:host ::ng-deep .alert-delete {
+  --backdrop-opacity: 0.4;
+
+  .alert-wrapper {
+    border-radius: var(--radius-lg) !important;
+    padding: var(--sp-2);
+  }
+
+  .alert-head h2 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--cor-ink);
+  }
+
+  .alert-message {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--cor-ink-muted);
+  }
+
+  .btn-remover {
+    color: #e63946 !important;
+    font-weight: 600 !important;
+  }
+}
+
