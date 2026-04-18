@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { EntradaDiario } from './supabase.service';
 
 export interface AnaliseIA {
   humor_score: number;
@@ -63,6 +64,47 @@ export class GroqService {
       analise.temas = analise.temas.map((t: string) => t.toLowerCase().trim()).slice(0, 3);
 
       return analise;
+    } catch {
+      return null;
+    }
+  }
+
+  async gerarInsightSemanal(entradas: EntradaDiario[]): Promise<string | null> {
+    if (!environment.groqKey || environment.groqKey === 'GROQ_KEY_AQUI') return null;
+    if (entradas.length === 0) return null;
+
+    const resumo = entradas
+      .slice(0, 7)
+      .map(e => {
+        const d = new Date(e.created_at).toLocaleDateString('pt-BR', { weekday: 'short', day: 'numeric' });
+        return `[${d}, humor ${e.humor_score ?? '?'}/10, ${e.emocao ?? '?'}]: ${e.conteudo.slice(0, 120)}`;
+      })
+      .join('\n');
+
+    try {
+      const res = await fetch(this.url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${environment.groqKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: this.modelo,
+          messages: [
+            {
+              role: 'system',
+              content: `Você é um assistente de bem-estar empático. Analise as entradas de diário da semana e gere um insight personalizado de 1 a 2 frases em português. Conecte padrões observados (emoções, temas, variação de humor) de forma humana, calorosa e não clínica. Sem introdução, sem "Com base em...", só o insight direto.`,
+            },
+            { role: 'user', content: resumo },
+          ],
+          temperature: 0.75,
+          max_tokens: 180,
+        }),
+      });
+
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data.choices?.[0]?.message?.content?.trim() ?? null;
     } catch {
       return null;
     }

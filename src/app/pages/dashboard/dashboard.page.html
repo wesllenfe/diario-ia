@@ -1,11 +1,179 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Dashboard</ion-title>
+    <div class="toolbar-inner">
+      <div>
+        <p class="toolbar-label">Seus insights</p>
+        <h1 class="toolbar-title">Dashboard</h1>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-text color="medium">
-    <p>Em breve: insights e gráficos gerados pela IA.</p>
-  </ion-text>
+<ion-content [fullscreen]="true" class="dash-content">
+
+  <!-- ── Skeleton ── -->
+  @if (carregando()) {
+    <div class="skeleton-wrap">
+      <div class="skeleton-metrics">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+      <div class="skeleton-block tall"></div>
+      <div class="skeleton-block"></div>
+      <div class="skeleton-block short"></div>
+    </div>
+  }
+
+  <!-- ── Sem dados ── -->
+  @else if (!dados()?.temDadosSuficientes) {
+    <div class="empty-dash animate-in">
+      <div class="empty-orb">
+        <ion-icon name="pencil-outline" />
+      </div>
+      <h2>Ainda sem dados</h2>
+      <p>Escreva algumas entradas no diário para que os insights comecem a aparecer aqui.</p>
+    </div>
+  }
+
+  <!-- ── Dashboard ── -->
+  @else {
+    <div class="dash-body">
+
+      <!-- Métricas -->
+      <section class="metrics-row animate-in">
+        <div class="metric-card">
+          <div class="metric-icon flame">
+            <ion-icon name="flame-outline" />
+          </div>
+          <div class="metric-val">{{ dados()!.streak }}</div>
+          <div class="metric-label">dias seguidos</div>
+        </div>
+
+        <div class="metric-card metric-card--accent">
+          <div class="metric-icon trend">
+            <ion-icon name="trending-up-outline" />
+          </div>
+          <div class="metric-val">
+            @if (dados()!.humorMedio7Dias !== null) {
+              {{ dados()!.humorMedio7Dias | number:'1.1-1' }}
+            } @else {
+              —
+            }
+          </div>
+          <div class="metric-label">humor / 7 dias</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon cal">
+            <ion-icon name="calendar-outline" />
+          </div>
+          <div class="metric-val">{{ dados()!.totalMes }}</div>
+          <div class="metric-label">entradas no mês</div>
+        </div>
+      </section>
+
+      <!-- Gráfico de humor -->
+      <section class="section animate-in" style="animation-delay:80ms">
+        <h2 class="section-title">Humor — últimos 7 dias</h2>
+        <div class="chart-wrap">
+          @for (dia of dados()!.humorPorDia; track dia.label) {
+            <div class="bar-col">
+              <div class="bar-score">
+                @if (dia.score !== null) { {{ dia.score | number:'1.0-1' }} }
+              </div>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  [class]="'bar--' + corBarra(dia.score)"
+                  [style.height.px]="alturaBarra(dia.score)"
+                ></div>
+              </div>
+              <div class="bar-label" [class.bar-label--hoje]="$last">{{ dia.label }}</div>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- Emoção + Insight em grid -->
+      <div class="mid-grid animate-in" style="animation-delay:160ms">
+
+        <!-- Emoção predominante -->
+        <section class="section emocao-section">
+          <h2 class="section-title">Esta semana</h2>
+          @if (dados()!.emocaoPredominante) {
+            <div class="emocao-big">
+              <span class="emocao-emoji-big">{{ emojiPara(dados()!.emocaoPredominante) }}</span>
+              <div>
+                <div
+                  class="emocao-nome"
+                  [class]="'emocao--' + dados()!.corEmocao"
+                >{{ dados()!.emocaoPredominante }}</div>
+                <div class="emocao-sub">emoção predominante</div>
+              </div>
+            </div>
+          } @else {
+            <p class="sem-dados">Sem dados ainda</p>
+          }
+        </section>
+
+        <!-- Entradas na semana -->
+        <section class="section stat-section">
+          <h2 class="section-title">Entradas</h2>
+          <div class="stat-big">
+            <span class="stat-num">{{ dados()!.entradasSemana.length }}</span>
+            <span class="stat-den">/ semana</span>
+          </div>
+          <div class="stat-bar-wrap">
+            <div
+              class="stat-bar-fill"
+              [style.width.%]="Math.min((dados()!.entradasSemana.length / 7) * 100, 100)"
+            ></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Insight semanal -->
+      <section class="section insight-section animate-in" style="animation-delay:240ms">
+        <div class="insight-header">
+          <ion-icon name="sparkles-outline" class="insight-icon" />
+          <h2 class="section-title">Insight da semana</h2>
+        </div>
+
+        @if (carregandoInsight()) {
+          <div class="insight-loading">
+            <ion-spinner name="dots" />
+            <span>A IA está pensando...</span>
+          </div>
+        } @else if (insight()) {
+          <blockquote class="insight-text">{{ insight() }}</blockquote>
+        } @else if (!dados()!.entradasSemana.length) {
+          <p class="sem-dados">Escreva mais esta semana para gerar um insight.</p>
+        } @else {
+          <p class="sem-dados">Insight não disponível agora.</p>
+        }
+      </section>
+
+      <!-- Temas recorrentes -->
+      @if (dados()!.temas.length > 0) {
+        <section class="section animate-in" style="animation-delay:320ms">
+          <h2 class="section-title">Temas recorrentes</h2>
+          <div class="temas-cloud">
+            @for (t of dados()!.temas; track t.tema) {
+              <span
+                class="tema-pill"
+                [style.font-size]="tamanhoFonte(t.peso)"
+                [style.opacity]="0.5 + t.peso * 0.5"
+                [title]="t.contagem + 'x'"
+              >{{ t.tema }}</span>
+            }
+          </div>
+        </section>
+      }
+
+    </div>
+  }
+
 </ion-content>
+
+<app-bottom-nav rota="/dashboard" />

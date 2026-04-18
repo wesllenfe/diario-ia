@@ -15,6 +15,7 @@ import {
 } from 'ionicons/icons';
 import { SupabaseService, EntradaDiario } from '../../services/supabase.service';
 import { GroqService } from '../../services/groq.service';
+import { BottomNavComponent } from '../../components/bottom-nav.component';
 
 export const EMOCAO_EMOJI: Record<string, string> = {
   feliz: '😊', animado: '🚀', grato: '🙏', tranquilo: '😌',
@@ -40,6 +41,7 @@ export const EMOCAO_COR: Record<string, 'positiva' | 'negativa' | 'neutra'> = {
     IonHeader, IonToolbar, IonContent, IonTextarea,
     IonSpinner, IonIcon, IonRefresher, IonRefresherContent,
     IonItemSliding, IonItem, IonItemOptions, IonItemOption,
+    BottomNavComponent,
   ],
 })
 export class DiarioPage implements OnInit {

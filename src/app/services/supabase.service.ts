@@ -94,4 +94,16 @@ export class SupabaseService {
     if (error) throw error;
     return (data ?? []) as EntradaDiario[];
   }
+
+  async buscarEntradasDashboard(): Promise<EntradaDiario[]> {
+    const desde = new Date();
+    desde.setDate(desde.getDate() - 30);
+    const { data, error } = await this.supabase
+      .from('entradas')
+      .select('id, conteudo, created_at, humor_score, emocao, temas, processado')
+      .gte('created_at', desde.toISOString())
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return (data ?? []) as EntradaDiario[];
+  }
 }
